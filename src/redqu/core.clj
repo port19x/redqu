@@ -1,5 +1,6 @@
 (ns redqu.core
-  (:require [remus :refer [parse-url parse-file]]))
+  (:require [remus :refer [parse-url parse-file]])
+  (:gen-class))
 
 (def cli-options
   [["-s" "--sort"
@@ -39,3 +40,6 @@
        (mapcat snipe)
        (filter #(not (nil? %))))
 )
+
+(defn -main []
+  (println "hi"))

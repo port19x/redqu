@@ -16,27 +16,20 @@
         pkgs = nixpkgs.legacyPackages.${system};
         cljpkgs = clj-nix.packages."${system}";
       in
-
       {
         packages = {
 
-          hello-clj = cljpkgs.mkCljBin {
+          clj = cljpkgs.mkCljBin {
             projectSrc = ./.;
-            name = "me.lafuente/cljdemo";
-            main-ns = "hello.core";
+	    name = "me.lafuente/cljdemo";
+            main-ns = "redqu.core";
             jdkRunner = pkgs.jdk17_headless;
           };
 
-          hello-jdk = cljpkgs.customJdk {
-            cljDrv = self.packages."${system}".hello-clj;
-            locales = "en,es";
-          };
-
-          hello-graal = cljpkgs.mkGraalBin {
-            cljDrv = self.packages."${system}".hello-clj;
+          graal = cljpkgs.mkGraalBin {
+            cljDrv = self.packages."${system}".clj;
           };
 
         };
       });
-
 }
