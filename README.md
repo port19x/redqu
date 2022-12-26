@@ -25,6 +25,13 @@ Dependency Alert: you need some sort of java runtime for this.
 
 Check the releases and download the .jar file.
 
+If you want to you can copy this to your path: `cp redqu-1.0.jar /usr/local/bin`
+And maybe add a small wrapperscript (redq would be a good name):
+```sh
+#!/bin/sh
+java -jar /usr/local/bin/redqu-1.0.jar $*
+```
+
 ## Building from Source
 
 ```sh
