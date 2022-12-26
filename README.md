@@ -2,6 +2,8 @@
 
 *A reddit rss media queue extractor*
 
+![2022-12-27_00-20](https://user-images.githubusercontent.com/82055622/209588571-310b3e87-a39f-4baf-b2bd-7a9348dccd44.png)
+
 ## Usage
 
 Provide a subreddit name as an input.
