@@ -1,5 +1,6 @@
 (ns redqu.core
-  (:require [remus :refer [parse-url parse-file]])
+  (:require [clj-http.client :as client])
+  (:require [clojure.string :as str])
   (:gen-class))
 
 (def cli-options
@@ -14,10 +15,6 @@
                  #(contains? states %))]]
    ["-h" "--help"]])
 
-(defn genred [x]
-  (str "https://www.reddit.com/r/" x "/top.rss?limit=25;t=week"))
-;(assert (= (genred "animemidriff") "https://www.reddit.com/r/animemidriff/top.rss?limit=25;t=week"))
-
 (defn snipe [x]
   (let [targets [#"https://i.redd.it/[a-z0-9]*.png"
                  #"https://i.redd.it/[a-z0-9]*.jpg"
@@ -27,19 +24,23 @@
                  #"https://i.imgur.com/[a-zA-Z0-9]*.png"
                  #"https://i.imgur.com/[a-zA-Z0-9]*.gifv"
                  #"https://redgifs.com/watch/[a-z]*"]]
-  (map #(re-find % x) targets)))
+  (map #(re-seq % x) targets)))
 
 (defn refinery [x]
-  (->> x
-       genred
-       parse-url
-       :feed
-       :entries
-       (mapcat :contents)
-       (map :value)
-       (mapcat snipe)
-       (filter #(not (nil? %))))
-)
+  (try
+    (->> x
+         (#(str "https://reddit.com/r/" % "/top.rss?limit=25;t=week"))
+         client/get
+         str
+         snipe
+         flatten
+         (filter #(not (nil? %)))
+         (str/join " ")
+         println
+    )
+    (catch Exception e (println "Reddit 429 Too Many Requests. Try Again."))
+  ))
 
-(defn -main []
-  (println "hi"))
+(defn -main [args]
+  ;Graalvm complains
+  (refinery args))

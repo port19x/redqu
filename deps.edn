@@ -1,5 +1,5 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        remus {:mvn/version "0.2.2"}
+        clj-http {:mvn/version "3.12.3"}
         org.clojure/tools.cli {:mvn/version "1.0.214"}}
  :paths ["src"]
  }
