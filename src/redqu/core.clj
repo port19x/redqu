@@ -1,5 +1,5 @@
 #!/usr/bin/env bb
-(require '[babashka.curl :as curl])
+(require '[babashka.http-client :as http])
 
 (defn timeoptmap
   [time]
@@ -31,11 +31,12 @@
 (try
   (let [sub  (first *command-line-args*)
         sort (fnext *command-line-args*)
-        time (fnext (next *command-line-args*))]
+        time (fnext (next *command-line-args*))
+        agent "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0"]
     (->> sub
          (str "https://reddit.com/r/")
          (#(str % (sortoptmap sort time)))
-         (curl/get)
+         (#(http/get % {:headers {"User-Agent" agent}}))
          (str)
          (snipe)
          (flatten)
