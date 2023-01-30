@@ -5,7 +5,7 @@
         hiccup/hiccup {:mvn/version "1.0.5"}
         cheshire/cheshire {:mvn/version "5.11.0"}
         quil/quil {:mvn/version "3.1.0"}}
-
+ :paths ["src"]
  :aliases {:repl/conjure {:extra-deps {nrepl/nrepl       {:mvn/version "0.9.0"}
                                        cider/cider-nrepl {:mvn/version "0.28.4"}}
                           :main-opts  ["-m" "nrepl.cmdline"

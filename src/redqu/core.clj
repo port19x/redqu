@@ -1,18 +1,31 @@
 (ns redqu.core
-  (:require [clj-http.client :as client])
-  (:require [clojure.string :as str])
+  (:require [clj-http.client :as client]
+            [clojure.string :as str])
   (:gen-class))
 
-(def cli-options
-  [["-s" "--sort"
-    :default "top"
-    :validate [(let [states #{"hot" "new" "top" "rising" "controversial" "h" "n" "t" "r" "c"}]
-                 #(contains? states %))]]
-   ["-t" "--time"
-    :default "week"
-    :validate [(let [states #{"hour" "day" "week" "month" "year" "all" "h" "d" "w" "m" "y" "a"}]
-                 #(contains? states %))]]
-   ["-h" "--help"]])
+(defn timeoptmap
+  [time]
+  (cond (or (= time "hour") (= time "h")) "?t=hour"
+        (or (= time "day") (= time "d")) "?t=day"
+        (or (= time "month") (= time "m")) "?t=month"
+        (or (= time "year") (= time "y")) "?t=year"
+        :else "?t=week"))
+
+(defn sortoptmap
+  [sort time]
+  (cond (or (= sort "hot") (= sort "h")) "/hot.rss"
+        (or (= sort "new") (= sort "n")) "/new.rss"
+        (or (= sort "rising") (= sort "r")) "/rising.rss"
+        (or (= sort "controversial") (= sort "c")) (str "/controversial.rss" (timeoptmap time))
+        :else (str "/top.rss" (timeoptmap time))))
+
+(defn rsslinkbuilder [args]
+  (let [sub  (first args)
+        sort (fnext args)
+        time (fnext (next args))]
+    (->> sub
+         (str "https://reddit.com/r/")
+         (#(str % (sortoptmap sort time))))))
 
 (defn snipe [x]
   (let [targets [#"https://i.redd.it/[a-z0-9]*.png"
@@ -28,7 +41,6 @@
 (defn refinery [x]
   (try
     (->> x
-         (#(str "https://reddit.com/r/" % "/top.rss?limit=25;t=week"))
          client/get
          str
          snipe
@@ -38,6 +50,6 @@
          println)
     (catch Exception e (println "Reddit 429 Too Many Requests. Try Again."))))
 
-(defn -main [args]
+(defn -main [& args]
   ;Graalvm complains
-  (refinery args))
+  (println (rsslinkbuilder args)))
