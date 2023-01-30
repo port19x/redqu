@@ -7,8 +7,7 @@
   [["-s" "--sort"
     :default "top"
     :validate [(let [states #{"hot" "new" "top" "rising" "controversial" "h" "n" "t" "r" "c"}]
-               #(contains? states %))]
-    ]
+                 #(contains? states %))]]
    ["-t" "--time"
     :default "week"
     :validate [(let [states #{"hour" "day" "week" "month" "year" "all" "h" "d" "w" "m" "y" "a"}]
@@ -24,7 +23,7 @@
                  #"https://i.imgur.com/[a-zA-Z0-9]*.png"
                  #"https://i.imgur.com/[a-zA-Z0-9]*.gifv"
                  #"https://redgifs.com/watch/[a-z]*"]]
-  (map #(re-seq % x) targets)))
+    (map #(re-seq % x) targets)))
 
 (defn refinery [x]
   (try
@@ -36,10 +35,8 @@
          flatten
          (filter #(not (nil? %)))
          (str/join " ")
-         println
-    )
-    (catch Exception e (println "Reddit 429 Too Many Requests. Try Again."))
-  ))
+         println)
+    (catch Exception e (println "Reddit 429 Too Many Requests. Try Again."))))
 
 (defn -main [args]
   ;Graalvm complains

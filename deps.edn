@@ -1,10 +1,30 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        clj-http/clj-http {:mvn/version "3.12.3"}
         org.clojure/tools.build {:mvn/version "0.9.0"}
-        org.clojure/tools.cli {:mvn/version "1.0.214"}}
- :paths ["src"]
- :aliases
-  {
-    :build {:deps {io.github.clojure/tools.build {:git/tag "v0.8.1" :git/sha "7d40500"}}
-            :ns-default build}}  ; <-- set build namespace as default
-}
+        org.clojure/tools.cli {:mvn/version "1.0.214"}
+        clj-http/clj-http {:mvn/version "3.12.3"}
+        hiccup/hiccup {:mvn/version "1.0.5"}
+        cheshire/cheshire {:mvn/version "5.11.0"}
+        quil/quil {:mvn/version "3.1.0"}}
+
+ :aliases {:repl/conjure {:extra-deps {nrepl/nrepl       {:mvn/version "0.9.0"}
+                                       cider/cider-nrepl {:mvn/version "0.28.4"}}
+                          :main-opts  ["-m" "nrepl.cmdline"
+                                       "--middleware" "[cider.nrepl/cider-middleware]"
+                                       "--interactive"]}
+           ;;; LINTERS (usually ran with e.g. `clj -M:test:eastwood`) ;;;
+           :build {:deps {io.github.clojure/tools.build {:git/tag "v0.8.1" :git/sha "7d40500"}}
+                   :ns-default build}
+           :eastwood {:extra-deps {jonase/eastwood {:mvn/version "1.3.0"}}
+                      :main-opts ["-m" "eastwood.lint"]}
+           :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
+                    :main-opts  ["-m" "cljfmt.main" "check"]}
+           :kibit {:extra-deps {jonase/kibit {:mvn/version "0.1.8"}}
+                   :main-opts ["-e" "(require,'[kibit.driver,:as,k])(k/external-run,[\"src\"],nil)"]}
+           :depot {:replace-deps {olical/depot {:mvn/version "2.3.0"}}
+                      :main-opts ["-m" "depot.outdated.main"]}
+           ;;Run with `clj -X:yagni`
+           :yagni {:extra-deps {venantius/yagni {:mvn/version "0.1.7"}}
+                   :exec-fn yagni.core/run-yagni
+                   :exec-args {:source-paths ["src/hsnipe"]
+                               :main hsnipe.core}}
+}}
