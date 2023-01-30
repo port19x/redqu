@@ -1,2 +1,0 @@
-#!/bin/sh
-java -jar /usr/local/bin/redqu-1.0.jar $*
