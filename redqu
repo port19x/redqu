@@ -7,6 +7,7 @@
         (or (= time "day") (= time "d")) "?t=day"
         (or (= time "month") (= time "m")) "?t=month"
         (or (= time "year") (= time "y")) "?t=year"
+        (or (= time "all") (= time "a")) "?t=all"
         :else "?t=week"))
 
 (defn sortoptmap
