@@ -14,7 +14,7 @@ mpv $(redq cats new)
 ```
 *Redqu outputs a bunch of links, get creative.*
 
-Provide a subreddit name, a sort method and timeframe as an input.\ 
+Provide a subreddit name, a sort method and timeframe as an input. \
 Accepted sort methods: `hot new top rising controversial` \
 Default sort method: `top` \
 Accepted time frames: `hour day week month year all` \
