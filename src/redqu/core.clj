@@ -1,7 +1,8 @@
 (ns redqu.core
-  (:require [clj-http.client :as client]
-            [clojure.string :as str])
-  (:gen-class))
+  (:gen-class)
+  (:require
+   [clj-http.client :as client]
+   [clojure.string :as str]))
 
 (defn timeoptmap
   [time]
@@ -51,5 +52,4 @@
     (catch Exception e (println "Reddit 429 Too Many Requests. Try Again."))))
 
 (defn -main [& args]
-  ;Graalvm complains
   (println (rsslinkbuilder args)))
