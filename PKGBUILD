@@ -2,7 +2,7 @@
 pkgname='redqu'
 pkgver=1.1
 pkgrel=1
-pkgdesc='A reddit rss media queue extractor'
+pkgdesc='A media centric reddit client'
 arch=('any')
 url='https://github.com/port19x/redqu'
 license=('Unlicense')

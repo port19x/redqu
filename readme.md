@@ -1,7 +1,7 @@
 # Redqu
 [![bb compatible](https://raw.githubusercontent.com/babashka/babashka/master/logo/badge.svg)](https://babashka.org)
 
-*A reddit rss media queue extractor*
+*A media centric reddit client*
 
 ![Showcase](https://user-images.githubusercontent.com/82055622/209588571-310b3e87-a39f-4baf-b2bd-7a9348dccd44.png)
 
