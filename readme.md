@@ -20,16 +20,19 @@ Default sort method: `top` \
 Accepted time frames: `hour day week month year all` \
 Default time frame: `week`
 
-## Dependencies
-
-Babashka
-
 ## Installation
 
-I'll provide a PKGBUILD soon-ish.
+### Arch Linux
 
+```
+yay -S redqu
+```
+
+### From Source
+
+1. Install [babashka](https://github.com/babashka/babashka#installation)
+2. Put redqu in your path:
 ```sh
-yay -S babashka-bin
 sudo curl -sL github.com/port19x/redqu/raw/main/redqu -o /usr/local/bin/redqu &&
 sudo chmod +x /usr/local/bin/redqu
 ```
