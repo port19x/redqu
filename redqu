@@ -44,4 +44,10 @@
          (filter #(not (nil? %)))
          (str/join " ")
          (println)))
-  (catch Exception e (println "Reddit 429 Too Many Requests. Try Again.")))
+  (catch Exception e (println "Usage: redqu sub sort time"
+                              "\nExample: mpv $(redqu cats top week)\n"
+                              "\nValid sort parameters: hot new top rising controversial"
+                              "\nValid time parameters: hour day week month year all"
+                              "\nTop of week is the default\n"
+                              "\nIf you're seeing this message in error, please open an Issue:"
+                              "\nhttps://github.com/port19x/redqu/issues")))
