@@ -50,19 +50,17 @@ function gettime(arg)
     }
 }
 
-function request(url, endpoint)
+function request(domain, endpoint)
 {
-    target = "/inet/tcp/0/" url "/80"
-    payload = "GET " endpoint " HTTP/1.1" "\r\n" "Host: " url ":80" "\r\n" "User-Agent: gawk" "Connection:close" "\r\n\r\n"
+    target = "/inet/tcp/0/" domain "/80"
+    payload = "GET " endpoint " HTTP/1.1" "\r\n" "Host: " domain ":80" "\r\n" "User-Agent: gawk" "Connection:close" "\r\n\r\n"
     print payload |& target
 
     while ((target |& getline line) > 0)
         response = response "\n" line
     close(target)
 
-    print response
     return response
-    
 }
 
 BEGIN {
@@ -75,7 +73,7 @@ BEGIN {
     endpoint = "/r/" subreddit sort time
     #endpoint = "/"
     delete ARGV
-    request(root, endpoint)
+    print request(root, endpoint)
     exit 0
     RS="&quot;"
 }
