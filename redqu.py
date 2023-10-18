@@ -6,13 +6,13 @@ import subprocess
 import sys
 
 helptext = """Usage: redqu sub sort time
-Example: mpv $(redqu cats top week)
+Example: redqu cats top week
 
 Valid sort parameters: hot new top rising controversial
 Valid time parameters: hour day week month year all
 Top of week is the default
 
-If you're seeing this message in error, please open an Issue:
+To report issues of any kind:
 https://github.com/port19x/redqu/issues"""
 
 time = defaultdict(lambda: "?t=week") 
