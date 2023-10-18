@@ -21,7 +21,7 @@ async def ping(interaction: discord.Interaction):
 async def ping(interaction:discord.Interaction, sub:str,
                sort:Literal['top', 'hot', 'new', 'rising', 'controversial'] = "top",
                time:Literal['hour', 'day', 'week', 'month', 'year', 'all'] = "week",
-               n:Literal['1', '2', '3', '4', '5'] = '1'):
+               n:Literal['0', '1', '2', '3', '4'] = '0'):
         await interaction.response.send_message("\n".join(redqu(sub, sort, time, True, n)))
 
 waifu.run(token)
