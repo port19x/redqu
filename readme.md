@@ -28,6 +28,8 @@ yay -S redqu
 
 ### From Source
 
+(Also check you have python-requests and mpv installed)
+
 ```sh
 sudo curl -sL github.com/port19x/redqu/raw/master/redqu.py -o /usr/local/bin/redqu.py &&
 sudo chmod +x /usr/local/bin/redqu.py &&
