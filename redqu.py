@@ -51,7 +51,7 @@ def redqu(sub, s="t", t="w", bot=False, n="0"):
 
     if bot:
         n = int(n)
-        links = links[n:n+5]
+        links = links[5*n:5*n+5]
 
     return links
 
