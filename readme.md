@@ -1,5 +1,4 @@
 # Redqu
-[![bb compatible](https://raw.githubusercontent.com/babashka/babashka/master/logo/badge.svg)](https://babashka.org)
 
 *A media centric reddit client*
 
@@ -8,11 +7,10 @@
 ## Usage
 
 ```sh
-mpv $(redq cats)
-mpv $(redq cats top hour)
-mpv $(redq cats new)
+redqu cats
+redqu cats top hour
+redqu cats new
 ```
-*Redqu outputs a bunch of links, get creative.*
 
 Provide a subreddit name, a sort method and timeframe as an input. \
 Accepted sort methods: `hot new top rising controversial` \
@@ -30,9 +28,8 @@ yay -S redqu
 
 ### From Source
 
-1. Install [babashka](https://github.com/babashka/babashka#installation)
-2. Put redqu in your path:
 ```sh
-sudo curl -sL github.com/port19x/redqu/raw/main/redqu -o /usr/local/bin/redqu &&
-sudo chmod +x /usr/local/bin/redqu
+sudo curl -sL github.com/port19x/redqu/raw/master/redqu.py -o /usr/local/bin/redqu.py &&
+sudo chmod +x /usr/local/bin/redqu.py &&
+sudo ln -sf /usr/local/bin/redqu.py /usr/local/bin/redqu
 ```
