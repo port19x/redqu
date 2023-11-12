@@ -1,19 +1,35 @@
 version: 2
 
-x-defaults: &defaults
-  directory: "/"
-  schedule:
-    interval: "weekly"
-    day: "monday"
-    time: "07:00"
-    timezone: "Europe/Berlin"
+# One day, github will support yaml aliases
+# x-defaults: &defaults
+# directory: "/"
+# schedule:
+#   interval: "weekly"
+#   day: "monday"
+#   time: "07:00"
+#   timezone: "Europe/Berlin"
 
 updates:
   - package-ecosystem: "github-actions"
-    << : *defaults
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Berlin"
 
   - package-ecosystem: "pip"
-    << : *defaults
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Berlin"
 
   - package-ecosystem: "docker"
-    << : *defaults
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Berlin"
