@@ -12,7 +12,7 @@ jobs:
       - name: Setup Environment
         run: |
           echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
-          echo ${{secrets.TOKEN}} >> secret.py
+          echo "token = \"${{secrets.TOKEN}}\"" >> secret.py
       - name: Build Docker Image
         run: |
           docker image build \
