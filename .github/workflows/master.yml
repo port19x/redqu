@@ -1,34 +1,29 @@
-name: Push built docker image straight over the wire
+name: Publish to github container registry
 on:
   push:
-  schedule:
-    - cron: '00 00 * * 1'
 
 jobs:
-  docker_catapult:
-    runs-on: "ubuntu-22.04"
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    env:
+      IMAGE_NAME: redqu
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Environment
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Push image
         run: |
-          echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
-          echo "token = \"${{secrets.TOKEN}}\"" >> secret.py
-      - name: Build Docker Image
-        run: |
-          docker image build \
-          --label owner="$GITHUB_REPOSITORY_OWNER" \
-          -t "$REPO_NAME" .
-      - name: Save Docker Image
-        run: docker save "$REPO_NAME" -o "$REPO_NAME".tar
-      - name: scp ssh pipelines
-        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-        with:
-          host: hsnipe.moe
-          user: root
-          key: ${{secrets.SSH_KEY}}
-          scp: |
-            "./$REPO_NAME.tar" => /home/
-          last_ssh: |
-            docker image load --input "/home/$REPO_NAME.tar"
-            docker stop -t 2 "$REPO_NAME" || true
-            docker run -d --name "$REPO_NAME" --rm "$REPO_NAME"
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          [ "$VERSION" == "main" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
